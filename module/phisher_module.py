@@ -5,7 +5,7 @@ import pytorch_lightning as pl
 
 
 
-class PhiserhModule(pl.LightningModule):
+class PhisherhModule(pl.LightningModule):
     def __init__(self, model, optimizer, num_classes, learning_rate=1e-3):
         super().__init__()
         self.save_hyperparameters()
