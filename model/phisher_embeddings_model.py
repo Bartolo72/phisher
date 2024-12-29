@@ -6,8 +6,10 @@ from .phisher_model import PhisherModel
 
 
 class PhisherEmbeddingModel(PhisherModel, nn.Module):
-    def __init__(self, vocab_size: int, embedding_dim: int, out_features: int = 2):
-        super().__init__()
+    def __init__(self: "PhisherEmbeddingModel", vocab_size: int, embedding_dim: int, out_features: int = 2) -> None:
+        PhisherModel.__init__(self, out_features=out_features)
+        nn.Module.__init__(self)
+        
         self.embedding = nn.Embedding(num_embeddings=vocab_size, embedding_dim=embedding_dim, padding_idx=0)
         self.conv1 = nn.Conv2d(in_channels=1, out_channels=6, kernel_size=(5, 1))
         self.conv2 = nn.Conv2d(in_channels=6, out_channels=12, kernel_size=(5, 1))

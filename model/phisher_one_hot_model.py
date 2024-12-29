@@ -7,7 +7,8 @@ from .phisher_model import PhisherModel
 
 class PhisherOneHotModel(PhisherModel, nn.Module):
     def __init__(self: "PhisherOneHotModel", out_features: int = 2) -> None:
-        super().__init__()
+        PhisherModel.__init__(self, out_features=out_features)
+        nn.Module.__init__(self)
         
         self.conv1 = nn.Conv2d(in_channels=1, out_channels=6, kernel_size=(5, 5)) 
         self.conv2 = nn.Conv2d(in_channels=6, out_channels=12, kernel_size=(5, 5))
