@@ -1,0 +1,17 @@
+trainer:
+  max_epochs: 10
+  check_val_every_n_epoch: 2
+  accelerator: "auto"
+  devices: 1
+
+data_module_setup:
+  train_size: 0.7
+  val_size: 0.1
+
+defaults:
+  - dataset: one_hot_dataset
+  - data_module: data_module
+  - model: phisher_one_hot
+  - optimizer: adam_optim
+  - callbacks: callbacks
+  - logger: wandb_logger

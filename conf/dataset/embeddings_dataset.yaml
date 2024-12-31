@@ -1,0 +1,5 @@
+_target_: phisher.dataset.phishing_embeddings_dataset.PhishingEmbeddingDataset
+csv_file_path: 'phish_dataset.csv'
+max_length: 200
+train_size: 0.7
+val_size: 0.1

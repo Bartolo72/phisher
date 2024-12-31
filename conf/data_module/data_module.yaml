@@ -1,0 +1,2 @@
+_target_: phisher.dataset.phishing_data_module.PhishingDataModule
+batch_size: 32

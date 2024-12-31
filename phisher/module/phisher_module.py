@@ -47,9 +47,12 @@ class PhisherhModule(pl.LightningModule):
 
 
     def training_step(self, batch, batch_idx):
-        loss, acc, _, __, ___ = self.common_test_valid_step(batch, batch_idx)
+        loss, acc, f1, precision, recall = self.common_test_valid_step(batch, batch_idx)
         self.log('train_loss', loss, on_step=True, on_epoch=True, logger=True)
         self.log('train_acc', acc, on_step=True, on_epoch=True, logger=True)
+        self.log('train_f1', f1, prog_bar=True)
+        self.log('train_precision', precision, prog_bar=True)
+        self.log('train_recall', recall, prog_bar=True)
         return loss
 
 

@@ -1,0 +1,2 @@
+_target_: phisher.model.phisher_one_hot_model.PhisherOneHotModel
+out_features: 2
