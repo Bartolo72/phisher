@@ -1,3 +1,3 @@
 _target_: phisher.dataset.phishing_one_hot_dataset.PhishingOneHotDataset
-csv_file_path: '${hydra:runtime.cwd}/phish_dataset.csv'
+csv_file_path: '${hydra:runtime.output_dir}/phish_dataset.csv'
 max_length: 200

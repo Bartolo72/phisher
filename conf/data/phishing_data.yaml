@@ -1,0 +1,10 @@
+phiusiil_data:
+  gdown_link: "https://drive.google.com/uc?id=1cZIVx5vabrMZnTvSo1L05gBYtJgGeE8U"
+  columns: ['url', 'status']
+  columns_mapping: {'status': 'label'}
+  labels_mapping: {'legitimate': 0, 'phishing': 1}
+
+web_page_data:
+  gdown_link: "https://drive.google.com/uc?id=1Qr2c3ax7ugQC4hvw-Au9vcl4cOEhJE_k"
+  columns: ['URL', 'label']
+  columns_mapping: {'URL': 'url', 'label': 'label'}

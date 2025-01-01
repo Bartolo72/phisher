@@ -9,6 +9,8 @@ data_module_setup:
   val_size: 0.1
 
 defaults:
+  - _self_
+  - data: phishing_data
   - dataset: one_hot_dataset
   - data_module: data_module
   - model: phisher_one_hot
