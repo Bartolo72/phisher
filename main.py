@@ -4,6 +4,8 @@ from hydra.utils import instantiate
 from omegaconf import DictConfig
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import Callback
+from rich.console import Console
+from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn
 from typing import List
 
 from phisher.model import PhisherModel
@@ -11,25 +13,28 @@ from phisher.module import PhisherhModule
 from phisher.dataset import PhishingDataModule, PhishingDataset
 from phisher.dataset.utils import prepare_phish_dataset
 
-from rich.console import Console
-from rich.progress import Progress
-
 
 console = Console()
 
 @hydra.main(config_path="conf", config_name="config", version_base="1.1")
 def main(cfg: DictConfig) -> None:
-    console.log("[bold blue]Starting dataset preparation...[/bold blue]")
+    console.log("[bold gold3]Starting dataset preparation...[/bold gold3]")
     
-    with Progress() as progress:
+    with Progress(
+        SpinnerColumn(spinner_name="dots", style="cyan"),
+        TextColumn("[progress.description]{task.description}"),
+        BarColumn(),
+        TextColumn("{task.completed}/{task.total}"),
+        console=console,
+    ) as progress:
         task = progress.add_task("[cyan]Preparing dataset...", total=len(cfg.data))
         for idx, data_config in enumerate(cfg.data.values()):
             prepare_phish_dataset(target_file_path="phish_dataset.csv", **data_config)
             progress.update(task, advance=1)
-    
     console.log("[bold green]Dataset prepared successfully.[/bold green]")
     
-    console.log("[bold blue]Initializing components...[/bold blue]")
+    console.log("[bold gold3]Initializing components...[/bold gold3]")
+
     dataset: PhishingDataset = instantiate(cfg.dataset)
     console.log(f"Dataset instantiated: [green]{type(dataset).__name__}[/green]")
     
@@ -57,11 +62,11 @@ def main(cfg: DictConfig) -> None:
         logger=logger,
         callbacks=callbacks,
     )
-    console.log("[bold blue]Training started...[/bold blue]")
+    console.log("[bold gold3]Training started...[/bold gold3]")
     trainer.fit(module, data_module)
-    console.log("[bold green]Training finished.[/bold green]")
+    console.log("[bold gold3]Training finished.[/bold gold3]")
     trainer.test(model=module, datamodule=data_module)
-    console.log("[bold green]Testing finished.[/bold green]")
+    console.log("[bold gold3]Testing finished.[/bold gold3]")
 
 
 if __name__ == "__main__":
