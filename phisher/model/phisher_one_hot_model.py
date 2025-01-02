@@ -6,7 +6,7 @@ from .phisher_model import PhisherModel
 
 
 class PhisherOneHotModel(PhisherModel, nn.Module):
-    def __init__(self: "PhisherOneHotModel", out_features: int = 2) -> None:
+    def __init__(self: "PhisherOneHotModel", out_features: int = 1) -> None:
         PhisherModel.__init__(self, out_features=out_features)
         nn.Module.__init__(self)
         

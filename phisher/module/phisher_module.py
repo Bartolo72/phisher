@@ -14,10 +14,11 @@ class PhisherhModule(pl.LightningModule):
         self.model = model
         self.optimizer = optimizer
 
-        self.accuracy = torchmetrics.Accuracy(task="multiclass", num_classes=self.num_classes)
-        self.f1 = torchmetrics.F1Score(task="multiclass", num_classes=self.num_classes)
-        self.precision = torchmetrics.Precision(task="multiclass", num_classes=self.num_classes)
-        self.recall = torchmetrics.Recall(task="multiclass", num_classes=self.num_classes)
+        self.accuracy = torchmetrics.Accuracy(task="binary")
+        self.f1 = torchmetrics.F1Score(task="binary")
+        self.precision = torchmetrics.Precision(task="binary")
+        self.recall = torchmetrics.Recall(task="binary")
+        self.auroc = torchmetrics.classification.AUROC(task="binary")
 
 
     def forward(self, x):
@@ -25,7 +26,8 @@ class PhisherhModule(pl.LightningModule):
 
 
     def compute_loss(self, x, y):
-        return F.cross_entropy(x, y)
+        x = x.squeeze(dim=1) if x.ndim == 2 and x.shape[1] == 1 else x
+        return F.binary_cross_entropy_with_logits(x, y.float())
 
 
     def common_step(self, batch, batch_idx):
@@ -37,42 +39,44 @@ class PhisherhModule(pl.LightningModule):
 
     def common_test_valid_step(self, batch, batch_idx):
         loss, outputs, y = self.common_step(batch, batch_idx)
-        preds = torch.argmax(outputs, dim=1)
+        probs = torch.sigmoid(outputs.squeeze(1))
+        preds = (probs >= 0.5).int()
 
         acc = self.accuracy(preds, y)
         f1 = self.f1(preds, y)
         precision = self.precision(preds, y)
         recall = self.recall(preds, y)
-        return loss, acc, f1, precision, recall
+        auc = self.auroc(probs, y)
+        return loss, acc, f1, precision, recall, auc
 
 
     def training_step(self, batch, batch_idx):
-        loss, acc, f1, precision, recall = self.common_test_valid_step(batch, batch_idx)
-        self.log('train_loss', loss, on_step=True, on_epoch=True, logger=True)
-        self.log('train_acc', acc, on_step=True, on_epoch=True, logger=True)
-        self.log('train_f1', f1, prog_bar=True)
-        self.log('train_precision', precision, prog_bar=True)
-        self.log('train_recall', recall, prog_bar=True)
+        loss, acc, _, __, ___, auc = self.common_test_valid_step(batch, batch_idx)
+        self.log('train_loss', loss, on_step=True, on_epoch=True, logger=True, prog_bar=True)
+        self.log('train_acc', acc, on_step=True, on_epoch=True, logger=True, prog_bar=True)
+        self.log('train_auc', auc, on_step=True, on_epoch=False, logger=True)
         return loss
 
 
     def validation_step(self, batch, batch_idx):
-        loss, acc, f1, precision, recall = self.common_test_valid_step(batch, batch_idx)
-        self.log('val_loss', loss, prog_bar=True)
-        self.log('val_acc', acc, prog_bar=True)
-        self.log('val_f1', f1, prog_bar=True)
-        self.log('val_precision', precision, prog_bar=True)
-        self.log('val_recall', recall, prog_bar=True)
+        loss, acc, f1, precision, recall, auc = self.common_test_valid_step(batch, batch_idx)
+        self.log('val_loss', loss)
+        self.log('val_acc', acc)
+        self.log('val_f1', f1)
+        self.log('val_precision', precision)
+        self.log('val_recall', recall)
+        self.log('val_auc', auc)
         return loss
 
 
     def test_step(self, batch, batch_idx):
-        loss, acc, f1, precision, recall = self.common_test_valid_step(batch, batch_idx)
-        self.log('test_loss', loss, prog_bar=True)
-        self.log('test_acc', acc, prog_bar=True)
-        self.log('test_f1', f1, prog_bar=True)
-        self.log('test_precision', precision, prog_bar=True)
-        self.log('test_recall', recall, prog_bar=True)
+        loss, acc, f1, precision, recall, auc = self.common_test_valid_step(batch, batch_idx)
+        self.log('test_loss', loss)
+        self.log('test_acc', acc)
+        self.log('test_f1', f1)
+        self.log('test_precision', precision)
+        self.log('test_recall', recall)
+        self.log('test_auc', auc)
         return loss
 
 

@@ -1,4 +1,4 @@
 _target_: phisher.model.phisher_embeddings_model.PhisherEmbeddingModel
 vocab_size: 84
 embedding_dim: 100
-out_features: 2
+out_features: 1
