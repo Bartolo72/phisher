@@ -1,5 +1,5 @@
 trainer:
-  max_epochs: 4
+  max_epochs: 10
   check_val_every_n_epoch: 2
   accelerator: "auto"
   devices: 1

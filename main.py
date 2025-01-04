@@ -68,7 +68,8 @@ def main(cfg: DictConfig) -> None:
     trainer.test(model=module, datamodule=data_module)
     console.log("[bold gold3]Testing finished.[/bold gold3]")
 
-    torch.save(model, "phisher_one_hot_model.pt")
+    torch.save(module.state_dict(), "weihts_pth_phisher_one_hot_module_filtered.pth")
+
 
 if __name__ == "__main__":
     main()

@@ -5,6 +5,4 @@ phiusiil_data:
   labels_mapping: {'legitimate': 0, 'phishing': 1}
 
 web_page_data:
-  gdown_link: "https://drive.google.com/uc?id=1Qr2c3ax7ugQC4hvw-Au9vcl4cOEhJE_k"
-  columns: ['URL', 'label']
-  columns_mapping: {'URL': 'url', 'label': 'label'}
+  gdown_link: "https://drive.google.com/uc?id=1a_2kf-eHjkBV6H9G5PxH4nrcqFDk4n5R"
