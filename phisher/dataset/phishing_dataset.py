@@ -15,18 +15,24 @@ class PhishingDataset(Dataset):
         label = self.data.iloc[idx, 1]
         return url, label
 
-
     def get_stats(self: "PhishingDataset") -> Dict[str, Any]:
         labels = self.data["label"].unique()
-        stats = [{
-            "Label": label,
-            "Count": len(self.data[self.data["label"] == label]),
-            "Percent": round(len(self.data[self.data["label"] == label]) / len(self.data) * 100, 2)
-        } for label in labels]
+        stats = [
+            {
+                "Label": label,
+                "Count": len(self.data[self.data["label"] == label]),
+                "Percent": round(
+                    len(self.data[self.data["label"] == label]) / len(self.data) * 100,
+                    2,
+                ),
+            }
+            for label in labels
+        ]
         return stats
-
 
     def print_stats(self: "PhishingDataset") -> None:
         stats = self.get_stats()
         for stat in stats:
-            print(f"Label: {stat['Label']}, Count: {stat['Count']}, Percent: {stat['Percent']}%")
+            print(
+                f"Label: {stat['Label']}, Count: {stat['Count']}, Percent: {stat['Percent']}%"
+            )

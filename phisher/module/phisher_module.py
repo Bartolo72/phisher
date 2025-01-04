@@ -4,7 +4,6 @@ import torch.nn.functional as F
 import pytorch_lightning as pl
 
 
-
 class PhisherhModule(pl.LightningModule):
     def __init__(self, model, optimizer, num_classes, learning_rate=1e-3):
         super().__init__()
@@ -20,22 +19,18 @@ class PhisherhModule(pl.LightningModule):
         self.recall = torchmetrics.Recall(task="binary")
         self.auroc = torchmetrics.classification.AUROC(task="binary")
 
-
     def forward(self, x):
         return self.model(x)
-
 
     def compute_loss(self, x, y):
         x = x.squeeze(dim=1) if x.ndim == 2 and x.shape[1] == 1 else x
         return F.binary_cross_entropy_with_logits(x, y.float())
 
-
     def common_step(self, batch, batch_idx):
         x, y = batch
         outputs = self(x)
-        loss = self.compute_loss(outputs,y)
+        loss = self.compute_loss(outputs, y)
         return loss, outputs, y
-
 
     def common_test_valid_step(self, batch, batch_idx):
         loss, outputs, y = self.common_step(batch, batch_idx)
@@ -49,36 +44,40 @@ class PhisherhModule(pl.LightningModule):
         auc = self.auroc(probs, y)
         return loss, acc, f1, precision, recall, auc
 
-
     def training_step(self, batch, batch_idx):
         loss, acc, _, __, ___, auc = self.common_test_valid_step(batch, batch_idx)
-        self.log('train_loss', loss, on_step=True, on_epoch=True, logger=True, prog_bar=True)
-        self.log('train_acc', acc, on_step=True, on_epoch=True, logger=True, prog_bar=True)
-        self.log('train_auc', auc, on_step=True, on_epoch=False, logger=True)
+        self.log(
+            "train_loss", loss, on_step=True, on_epoch=True, logger=True, prog_bar=True
+        )
+        self.log(
+            "train_acc", acc, on_step=True, on_epoch=True, logger=True, prog_bar=True
+        )
+        self.log("train_auc", auc, on_step=True, on_epoch=False, logger=True)
         return loss
-
 
     def validation_step(self, batch, batch_idx):
-        loss, acc, f1, precision, recall, auc = self.common_test_valid_step(batch, batch_idx)
-        self.log('val_loss', loss)
-        self.log('val_acc', acc)
-        self.log('val_f1', f1)
-        self.log('val_precision', precision)
-        self.log('val_recall', recall)
-        self.log('val_auc', auc)
+        loss, acc, f1, precision, recall, auc = self.common_test_valid_step(
+            batch, batch_idx
+        )
+        self.log("val_loss", loss)
+        self.log("val_acc", acc)
+        self.log("val_f1", f1)
+        self.log("val_precision", precision)
+        self.log("val_recall", recall)
+        self.log("val_auc", auc)
         return loss
-
 
     def test_step(self, batch, batch_idx):
-        loss, acc, f1, precision, recall, auc = self.common_test_valid_step(batch, batch_idx)
-        self.log('test_loss', loss)
-        self.log('test_acc', acc)
-        self.log('test_f1', f1)
-        self.log('test_precision', precision)
-        self.log('test_recall', recall)
-        self.log('test_auc', auc)
+        loss, acc, f1, precision, recall, auc = self.common_test_valid_step(
+            batch, batch_idx
+        )
+        self.log("test_loss", loss)
+        self.log("test_acc", acc)
+        self.log("test_f1", f1)
+        self.log("test_precision", precision)
+        self.log("test_recall", recall)
+        self.log("test_auc", auc)
         return loss
-
 
     def configure_optimizers(self):
         return self.optimizer
