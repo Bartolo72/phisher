@@ -5,6 +5,10 @@
 outputs/
 .hydra
 wandb
+__MACOSX
+model
+*.ckpt
+
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
