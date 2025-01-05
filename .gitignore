@@ -3,6 +3,8 @@
 
 ### HYDRA
 outputs/
+.hydra
+wandb
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

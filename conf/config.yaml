@@ -4,6 +4,13 @@ trainer:
   accelerator: "auto"
   devices: 1
 
+hydra:
+  run:
+    dir: .  # Set to current directory
+
+
+model_ckpt: null
+
 data_module_setup:
   train_size: 0.7
   val_size: 0.1
