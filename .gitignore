@@ -8,6 +8,7 @@ wandb
 __MACOSX
 model
 *.ckpt
+temp.py
 
 
 ### Python ###
@@ -22,7 +23,6 @@ data/pickle
 data_backup
 src/test
 results.json
-*.png
 *.csv
 test.py
 
