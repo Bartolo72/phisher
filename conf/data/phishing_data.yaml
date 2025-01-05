@@ -2,7 +2,12 @@ phiusiil_data:
   gdown_link: "https://drive.google.com/uc?id=1cZIVx5vabrMZnTvSo1L05gBYtJgGeE8U"
   columns: ['url', 'status']
   columns_mapping: {'status': 'label'}
-  labels_mapping: {'legitimate': 0, 'phishing': 1}
+  labels_mapping: {'legitimate': 1, 'phishing': 0}
 
 web_page_data:
   gdown_link: "https://drive.google.com/uc?id=1a_2kf-eHjkBV6H9G5PxH4nrcqFDk4n5R"
+
+
+# gpt_generated_data:
+#   gdown_link: "https://drive.google.com/uc?id=1Duwnl0fqI1F0tm8tRXp0g_YLYIbg-TKJ",
+#   labels_mapping: {1: 0, 0: 1}
