@@ -11,10 +11,10 @@ Wykorzystano dwa zbiory danych:
 Przed przetwarzaniem dane zredukowano do dwóch kolumn: `url` i `status`. Kolumna `url` została sprowadzona do hostname, usuwając protokoły i ścieżki.
 
 Stworzono dwa modele:  
-- **OneHot** ([opis](docs/onehot.md)),  
-- **Embeddings** ([opis](docs/embeddings.md)).  
+- **OneHot** ([opis](./onehot.md)),  
+- **Embeddings** ([opis](./embeddings.md)).  
 
-Każdy z modeli używa dedykowanego preprocessingu, gdzie zostały one opisane w wyżej przedstawionych notatnikach. 
+Każdy z modeli używa dedykowanego preprocessingu, gdzie zostały one opisane w wyżej przedstawionych plikach md. 
 
 Wyniki eksperymentów można znaleźć w [Weights & Biases](https://wandb.ai/bartosz-kosinski-b-warsaw-university-of-technology/phisher?nw=nwuserbartoszkosinskib).
 
@@ -30,7 +30,7 @@ W dwóch artykułach naukowych wykorzystano różne podejścia do detekcji phish
 
    | **Model**                | **F1 (%)** | **Precyzja (%)** | **Czułość (%)** | **Dokładność (%)** |
    |--------------------------|------------|------------------|----------------|-------------------|
-   | paper_model_embeddings   | 97.77      | 97.91            | 97.62          | 97.75            |
+   | paper_model_embeddings   | 98.56      | 98.55            | 98.62          | 98.58            |
 
 2. **Paper 2**: [A Deep Learning-Based Phishing Detection System Using CNN, LSTM, and LSTM-CNN](https://doi.org/10.3390/electronics12010232)
    - Wykorzystano pełne dane z datasetu.
@@ -38,20 +38,26 @@ W dwóch artykułach naukowych wykorzystano różne podejścia do detekcji phish
 
    | **Model**                | **F1 (%)** | **Precyzja (%)** | **Czułość (%)** | **Dokładność (%)** |
    |--------------------------|------------|------------------|----------------|-------------------|
-   | paper_model_cnn          | 98.56      | 98.55            | 98.62          | 98.58            |
+   | paper_model_cnn          | 99.2      | 99            | 99.2          | 99.2            |
 
 #### Porównanie wyników
 Zestawienie wyników naszych modeli z wynikami z literatury:
 
 | **Model**                | **F1 (%)** | **Precyzja (%)** | **Czułość (%)** | **Dokładność (%)** |
 |--------------------------|------------|------------------|----------------|-------------------|
-| paper_model_embeddings   | 97.77      | 97.91            | 97.62          | 97.75            |
-| paper_model_cnn          | 98.56      | 98.55            | 98.62          | 98.58            |
+| paper_model_embeddings   | 98.56      | 98.55            | 98.62          | 98.58            |
+| paper_model_cnn          | 99.2       | 99               | 99.2           | 99.2             |
 | Nasz model (Embeddings)   | 99.39      | 99.23            | 99.57          | 99.35            |
 | Nasz model (OneHot)     | 98.59      | 98.59            | 98.68          | 98.49            |
 
 #### Analiza
-Nasze modele osiągnęły wyższe wyniki niż modele opisane w literaturze, co więcej udało nam się poprawić wyniki dla modelu opartego o nie tylko zanurzenia znaków, co sugeruje skuteczność zastosowanego preprocessingu i architektur sieci neuronowych.
+Wyniki naszych modeli wskazują na wysoką skuteczność obu podejść (embeddings i one-hot), ale model z embeddingami przewyższa zarówno nasz model one-hot, jak i modele z literatury.
+
+Paper 1: Model bazujący na embeddingach znaków osiągnął solidne wyniki (F1 = 98.56%), jednak nasze podejście embeddingowe poprawiło ten wynik, osiągając F1 = 99.39%.
+
+Paper 2: Model CNN z pełnymi danymi uzyskał najwyższe wyniki (F1 = 99.2%), jednak nasze embeddingi były porównywalne, przewyższając pod względem precyzji (99.23%) i czułości (99.57%).
+
+Podsumowując, nasz model embeddingowy wykazuje przewagę nad literaturą dzięki lepszemu wykorzystaniu charakterystyk danych URL.
 
 
 

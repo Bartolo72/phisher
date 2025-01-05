@@ -31,14 +31,14 @@ Przetwarzanie danych w `PhishingOneHotDataset` obejmuje:
 # Trenowanie i ewaluacja
 Przy uruchamianiu skryptu nalezy zdefiniować adekwatne parametry `model` oraz `dataset`.
 ```
-!python /content/phisher/main.py \
+!python main.py \
     model=phisher_one_hot \
     dataset=one_hot_dataset
 ```
 
 # Ewaluacja checkpointu
 ```
-!python /content/phisher/main.py \
+!python main.py \
     model=phisher_one_hot \
     dataset=one_hot_dataset \
     model_ckpt=model_path
