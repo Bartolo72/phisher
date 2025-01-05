@@ -1,5 +1,5 @@
 # Architektura modelu
-![Architektura](/docs/img/architecture_embeddings.png)
+![Architektura](/docs/img/EmbeddingModelArchitecture.png)
 
 
 [Implementacja](phisher/model/phisher_embeddings_model.py)

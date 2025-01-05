@@ -1,5 +1,5 @@
 # Architektura modelu
-![Architektura](/docs/img/architecture_onehot.png)
+![Architektura](/docs/img/OneHotModelArchitecture.png)
 
 
 [Implementacja](phisher/model/phisher_one_hot_model.py)
