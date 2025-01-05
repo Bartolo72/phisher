@@ -75,6 +75,14 @@ def main(cfg: DictConfig) -> None:
 
     logger = instantiate(cfg.logger)
     console.print(f"Logger: [green]{type(logger).__name__}[/green]")
+    if isinstance(logger, pl.loggers.WandbLogger):
+        logger.experiment.summary.update(
+            {
+                "dataset": type(dataset).__name__,
+                "model": type(model).__name__,
+                "data": ", ".join(list(cfg.data.keys())),
+            }
+        )
 
     trainer: pl.Trainer = pl.Trainer(
         **cfg.trainer,

@@ -76,3 +76,11 @@ class PhisherhModule(pl.LightningModule):
 
     def configure_optimizers(self):
         return self.optimizer
+
+    def log_metadata(self, dataset_name: str, model_name: str):
+        self.logger.experiment.config.update(
+            {
+                "dataset_name": dataset_name,
+                "model_name": model_name,
+            }
+        )

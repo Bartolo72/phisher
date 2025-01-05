@@ -30,11 +30,11 @@ class PhisherEmbeddingModel(PhisherModel, nn.Module):
 
         x = self.conv1(x)
         x = F.relu(x)
-        x = F.max_pool2d(x, kernel_size=(2, 1), stride=(2, 1))  # Adjust pooling
+        x = F.max_pool2d(x, kernel_size=(2, 1), stride=(2, 1))
 
         x = self.conv2(x)
         x = F.relu(x)
-        x = F.max_pool2d(x, kernel_size=(2, 1), stride=(2, 1))  # Adjust pooling
+        x = F.max_pool2d(x, kernel_size=(2, 1), stride=(2, 1))
 
         x = x.reshape(-1, 12 * 47 * 100)
         x = self.fc1(x)
