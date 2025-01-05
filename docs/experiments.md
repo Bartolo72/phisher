@@ -16,7 +16,7 @@ Stworzono dwa modele:
 
 Każdy z modeli używa dedykowanego preprocessingu, gdzie zostały one opisane w wyżej przedstawionych plikach md. 
 
-Wyniki eksperymentów można znaleźć w [Weights & Biases](https://wandb.ai/bartosz-kosinski-b-warsaw-university-of-technology/phisher?nw=nwuserbartoszkosinskib).
+Wyniki eksperymentów można znaleźć w [Weights & Biases](https://api.wandb.ai/links/bartosz-kosinski-b-warsaw-university-of-technology/s6eg394x).
 
 
 ### Porównanie wyników z literaturą
