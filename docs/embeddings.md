@@ -8,7 +8,7 @@
 
 Przetwarzanie danych w `PhishingEmbeddingDataset` obejmuje:
 
-1. **Odczyt danych**: Plik CSV z URL-ami i etykietami (`0` - bezpieczny, `1` - phishingowy).
+1. **Odczyt danych**: Plik CSV z URL-ami i etykietami (`1` - bezpieczny, `0` - phishingowy).
 2. **Parsowanie URL-a**: Usunięcie protokołu (`http://`, `https://`) i ścieżki, zachowanie domeny głównej.
    - Przykład: `https://test.pl/index.html` → `test.pl`.
 3. **Kodowanie znaków na indeksy**:  
