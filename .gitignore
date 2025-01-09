@@ -9,6 +9,7 @@ __MACOSX
 model
 *.ckpt
 temp.py
+*.html
 
 
 ### Python ###

@@ -29,7 +29,7 @@ def main(cfg: DictConfig) -> None:
         console=console,
     ) as progress:
         task = progress.add_task("[cyan]Preparing dataset...", total=len(cfg.data))
-        for idx, data_config in enumerate(cfg.data.values()):
+        for _, data_config in enumerate(cfg.data.values()):
             prepare_phish_dataset(target_file_path="phish_dataset.csv", **data_config)
             progress.update(task, advance=1)
     console.print("[bold green]Dataset prepared successfully.[/bold green]")
