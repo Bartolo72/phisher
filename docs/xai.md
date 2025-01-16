@@ -57,12 +57,11 @@ Implementacja znajduje się [tutaj](../phisher/xai/phish_lime.py).
 | `apple.tracker-liveview.support` | Phishing (pewność 100%) | ![5](/docs/img/xai/gradcam/5.png)| ![5](/docs/img/xai/lime/5.png)|
 
 #### Kolory klas w Lime:
-- <p style='color:#1f77b4'>Phishing URL</p>
-- <p style='color:#fb7d0f'>Safe URL</p>
+![](https://img.shields.io/badge/Phishing%20URL-1f77b4)
+![](https://img.shields.io/badge/Safe%20URL-fb7d0f)
 
 #### Kolory w Grad-CAM:
-Podświetlone zostają wyłącznie znaki o jednym kolorze:
-- <p style='color:#0000ff'>Phishing</p>
+![](https://img.shields.io/badge/Phishing%20URL-0000ff)
 
 ### Wnioski
 
