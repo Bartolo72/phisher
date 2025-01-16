@@ -27,7 +27,12 @@ Celem eksperymentów było podkreślenie tych fragmentów adresów URL, które w
 
 ### Grad-CAM
 
-Przestrzeń embeddingów została przedstawiona jako macierz o określonych wymiarach. Inspirując się zaawansowanymi metodami wyjaśnialności stosowanymi w wizji komputerowej, przetestowaliśmy rozwiązanie [Grad-CAM](https://jacobgil.github.io/pytorch-gradcam-book/introduction.html). Celem było sprawdzenie, czy reprezentacja przestrzeni embeddingów może zastąpić obraz, zachowując swoją wyjaśnialność.
+Przestrzeń embeddingów została przedstawiona jako macierz o określonych wymiarach. Inspirując się zaawansowanymi metodami wyjaśnialności stosowanymi w wizji komputerowej, przetestowaliśmy rozwiązanie [Grad-CAM](https://jacobgil.github.io/pytorch-gradcam-book/introduction.html). Celem było sprawdzenie, czy reprezentacja przestrzeni embeddingów może zastąpić obraz, zachowując swoją wyjaśnialność. 
+
+> [!NOTE]  
+> Grad-CAM wymaga wybrania warstwy konwolucyjnej w celu wizualizacji filtrów wyuczonych przez model. W przeprowadzonych eksperymentach wybraliśmy pierwszą warstwę konwolucyjną. Szczegółowy opis architektury modelu znajduje się [tutaj](./embeddings.md#architektura-modelu).
+
+
 
 W [notatniku](../notebooks/xai_grad_cam.ipynb) znajduje się przykład użycia metody Grad-CAM dla przykładowego złośliwego adresu URL.
 
