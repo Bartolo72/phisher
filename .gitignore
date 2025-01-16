@@ -8,7 +8,7 @@ wandb
 __MACOSX
 model
 *.ckpt
-temp.py
+*temp.py
 *.html
 
 
