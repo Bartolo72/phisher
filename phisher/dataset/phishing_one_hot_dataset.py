@@ -3,6 +3,30 @@ import torch
 from torch.utils.data import Dataset
 from typing import Dict, Any, Tuple, List
 
+ALPHABET = list(
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~:/?#[]@!$&'()*+,;"
+) + [" "]
+
+
+def encode_url(url: str, max_length: int) -> torch.Tensor:
+    char_to_idx = {char: idx for idx, char in enumerate(ALPHABET)}
+
+    parsed_url = url.split("://")[-1]
+    if "/" in parsed_url:
+        parsed_url = parsed_url.split("/")[0]
+
+    if len(url) > max_length:
+        url = url[:max_length]
+    else:
+        url = url = url.ljust(max_length, " ")
+
+    matrix = torch.zeros(max_length, len(ALPHABET))
+    for i, char in enumerate(url):
+        if char in char_to_idx:
+            matrix[i, char_to_idx[char]] = 1
+
+    return matrix
+
 
 class PhishingOneHotDataset(Dataset):
     def __init__(
@@ -10,33 +34,6 @@ class PhishingOneHotDataset(Dataset):
     ) -> None:
         self.data: pd.DataFrame = pd.read_csv(csv_file_path)
         self.max_length: int = max_length
-        self.alphabet: List[str] = list(
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~:/?#[]@!$&'()*+,;"
-        ) + [" "]
-        self.char_to_idx: Dict[str, int] = {
-            char: idx for idx, char in enumerate(self.alphabet)
-        }
-
-    def parse_url(self: "PhishingOneHotDataset", url: str) -> str:
-        parsed_url = url.split("://")[-1]
-        if "/" in parsed_url:
-            parsed_url = parsed_url.split("/")[0]
-        return parsed_url
-
-    def pad_or_trim(self: "PhishingOneHotDataset", url: str) -> str:
-        if len(url) > self.max_length:
-            url = url[: self.max_length]
-        else:
-            url = url = url.ljust(self.max_length, " ")
-        return url
-
-    def encode_url(self: "PhishingOneHotDataset", url: str) -> torch.Tensor:
-        url = self.pad_or_trim(url)
-        matrix = torch.zeros(self.max_length, len(self.alphabet))
-        for i, char in enumerate(url):
-            if char in self.char_to_idx:
-                matrix[i, self.char_to_idx[char]] = 1
-        return matrix
 
     def __len__(self: "PhishingOneHotDataset") -> int:
         return len(self.data)
@@ -47,9 +44,7 @@ class PhishingOneHotDataset(Dataset):
         url = self.data.iloc[idx, 0]
         label = self.data.iloc[idx, 1]
 
-        parse_url = self.parse_url(url)
-        url = self.encode_url(url)
-
+        url = encode_url(url, self.max_length)
         return url, label
 
     def get_stats(self: "PhishingOneHotDataset") -> Dict[str, Any]:
